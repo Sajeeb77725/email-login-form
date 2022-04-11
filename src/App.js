@@ -100,6 +100,21 @@ function App() {
         onSubmit={submitButton}
         className="container mt-4 w-50"
       >
+        {!register && (
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Your Name</Form.Label>
+            <Form.Control
+              onBlur={inputFeild}
+              type="text"
+              placeholder="Enter Your Name"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide your name.
+            </Form.Control.Feedback>
+          </Form.Group>
+        )}
+
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
