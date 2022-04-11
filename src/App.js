@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   sendEmailVerification,
   sendPasswordResetEmail,
+  updateProfile,
 } from "firebase/auth";
 import app from "./firebase.init";
 import Form from "react-bootstrap/Form";
@@ -18,11 +19,16 @@ function App() {
   const [validated, setValidated] = useState(false);
   const [register, setRegister] = useState(false);
   const [error, setError] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
   const inputFeild = (event) => {
     setEmail(event.target.value);
+  };
+
+  const handleNameBlur = (event) => {
+    setName(event.target.value);
   };
 
   const passField = (event) => {
@@ -68,6 +74,7 @@ function App() {
           setEmail("");
           setPass("");
           verifyEmail();
+          handleName();
         })
         .catch((error) => {
           console.log(error);
@@ -89,6 +96,14 @@ function App() {
     });
   };
 
+  const handleName = () => {
+    updateProfile(auth.currentUser, {
+      displayName: name,
+    }).then(() => {
+      console.log("Got name");
+    });
+  };
+
   return (
     <div>
       <h2 className="text-primary mt-4" style={{ textAlign: "center" }}>
@@ -104,7 +119,7 @@ function App() {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Your Name</Form.Label>
             <Form.Control
-              onBlur={inputFeild}
+              onBlur={handleNameBlur}
               type="text"
               placeholder="Enter Your Name"
               required
